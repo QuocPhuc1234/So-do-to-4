@@ -1,1 +1,182 @@
+```html
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sơ Đồ Chỗ Ngồi Tổ 4</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+    .seat-card {
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+    }
+    .seat-card:hover {
+      transform: translateY(-1px);
+      border-color: #94a3b8;
+      box-shadow: 0 4px 12px -4px rgba(15, 23, 42, 0.08);
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-slate-50 text-slate-900 antialiased">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+    <!-- Title Only -->
+    <header class="text-center mb-6">
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+        Sơ Đồ Chỗ Ngồi Tổ 4
+      </h1>
+    </header>
 
+    <!-- Seating Chart -->
+    <main class="bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 shadow-sm">
+      <div id="classroomLayout" class="space-y-3.5">
+        <!-- Rendered by JS -->
+      </div>
+    </main>
+  </div>
+
+  <script>
+    const DESKS = [
+      {
+        deskNumber: 6,
+        left: {
+          shortName: 'Thịnh Phát',
+          fullName: 'Lê Thịnh Phát',
+          badge: null,
+          badgeType: null
+        },
+        right: {
+          shortName: 'Quốc Phúc',
+          fullName: 'Dương Quốc Phúc',
+          badge: 'Tổ trưởng',
+          badgeType: 'leader'
+        }
+      },
+      {
+        deskNumber: 5,
+        left: {
+          shortName: 'Huy Hoàng',
+          fullName: 'Nguyễn Huy Hoàng',
+          badge: null,
+          badgeType: null
+        },
+        right: {
+          shortName: 'Minh Kha',
+          fullName: 'Giảng Minh Kha',
+          badge: null,
+          badgeType: null
+        }
+      },
+      {
+        deskNumber: 4,
+        left: {
+          shortName: 'Hoài Phong',
+          fullName: 'Trương Công Hoài Phong',
+          badge: null,
+          badgeType: null
+        },
+        right: {
+          shortName: 'Tuyên Dương',
+          fullName: 'Nguyễn Ngọc Tuyên Dương',
+          badge: null,
+          badgeType: null
+        }
+      },
+      {
+        deskNumber: 3,
+        left: {
+          shortName: 'Duy Khôi',
+          fullName: 'Đặng Phùng Duy Khôi',
+          badge: null,
+          badgeType: null
+        },
+        right: {
+          shortName: 'Thành Nhân',
+          fullName: 'Nguyễn Thành Nhân',
+          badge: null,
+          badgeType: null
+        }
+      },
+      {
+        deskNumber: 2,
+        left: {
+          shortName: 'Ngân Bình',
+          fullName: 'Đoàn Châu Ngân Bình',
+          badge: null,
+          badgeType: null
+        },
+        right: {
+          shortName: 'Yến Phượng',
+          fullName: 'Phan Ngọc Yến Phượng',
+          badge: 'LPVN',
+          badgeType: 'officer'
+        }
+      },
+      {
+        deskNumber: 1,
+        left: {
+          shortName: 'Thành Luân',
+          fullName: 'Đỗ Thành Luân',
+          badge: null,
+          badgeType: null
+        },
+        right: {
+          shortName: 'Quốc Sang',
+          fullName: 'Nguyễn Hoàng Quốc Sang',
+          badge: null,
+          badgeType: null
+        }
+      }
+    ];
+
+    function renderBadge(badge, badgeType) {
+      if (!badge) return '';
+      if (badgeType === 'leader') {
+        return `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-amber-100 text-amber-800 border border-amber-200 shrink-0">${badge}</span>`;
+      }
+      return `<span class="inline-flex items-center px-2 py-0.5 rounded-md text-[11px] font-semibold bg-rose-100 text-rose-700 border border-rose-200 shrink-0">${badge}</span>`;
+    }
+
+    function renderSeat(seat) {
+      return `
+        <div class="seat-card rounded-xl border border-slate-200 bg-white px-3.5 py-3">
+          <div class="flex items-start justify-between gap-2">
+            <div class="min-w-0">
+              <div class="text-sm sm:text-[15px] font-bold text-slate-900 leading-tight">${seat.shortName}</div>
+              <div class="text-xs text-slate-500 mt-0.5 leading-snug">${seat.fullName}</div>
+            </div>
+            ${renderBadge(seat.badge, seat.badgeType)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderClassroom() {
+      const container = document.getElementById('classroomLayout');
+      container.innerHTML = DESKS.map(
+        (desk) => `
+          <div class="bg-slate-50/80 border-2 border-slate-300 rounded-2xl p-2.5 sm:p-3">
+            <div class="px-1 mb-2">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Bàn ${desk.deskNumber}</span>
+            </div>
+            <div class="grid grid-cols-2 gap-2.5">
+              ${renderSeat(desk.left)}
+              ${renderSeat(desk.right)}
+            </div>
+          </div>
+        `
+      ).join('');
+    }
+
+    renderClassroom();
+  </script>
+</body>
+</html>
+```
